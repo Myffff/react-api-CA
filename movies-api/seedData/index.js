@@ -7,6 +7,8 @@ import movieModel from "../api/movies/movieModel";
 import movies from "./movies.js";
 import trendingModel from "../api/trending/trendingModel";
 import trending from "./trending.js";
+import peopleModel from "../api/people/peopleModel";
+import people from "./people.js";
 
 dotenv.config();
 
@@ -58,9 +60,22 @@ export async function loadTrending() {
   }
 }
 
+export async function loadPeople() {
+  console.log("load seed data");
+  console.log(people.length);
+  try {
+    await peopleModel.deleteMany();
+    await peopleModel.collection.insertMany(people);
+    console.info(`${people.length} people were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load people Data: ${err}`);
+  }
+}
+
 if (process.env.SEED_DB) {
   loadUsers();
   loadGenres();
   loadMovies();
   loadTrending();
+  loadPeople();
 }

@@ -6,6 +6,7 @@ import "./seedData";
 import usersRouter from "./api/users";
 import genresRouter from "./api/genres";
 import trendingRouter from "./api/trending";
+import peopleRouter from "./api/people";
 import session from "express-session";
 import authenticate from "./authenticate";
 import passport from "./authenticate";
@@ -37,6 +38,7 @@ app.use(
   moviesRouter
 );
 app.use("/api/trending", trendingRouter);
+app.use("/api/people", peopleRouter);
 app.use(errHandler);
 
 app.listen(port, () => {
