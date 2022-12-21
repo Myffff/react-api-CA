@@ -1,29 +1,21 @@
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
 import PeopleContent from "../../components/PeopleContent";
 import CustomPagination from "../../components/pagination/index";
+import { getPeople } from "../../api/movie-api";
 
 const People = () => {
-  const [page,setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [content, setContent] = useState([]);
 
   const handleChange = (e, value) => {
-    setPage(value)
-  }
-
-  const fetchRating = async () => {
-    const { data } = await axios.get(
-      
-      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-    );
-
-    setContent(data.results);
-    console.log(data.results)
+    setPage(value);
   };
 
-
   useEffect(() => {
-    fetchRating();
+    getPeople().then((result) => {
+      setContent(result);
+    });
     // eslint-disable-next-line
   }, [page]);
 
