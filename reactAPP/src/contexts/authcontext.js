@@ -38,6 +38,7 @@ const AuthContextProvider = (props) => {
   const updateUserInfo = async (userId, username, email, password) => {
     const result = await updateInfo(userId, username, email, password);
     if (result.code === 200) {
+      alert("Update successfully");
       console.log("Update successfully");
     }
   };

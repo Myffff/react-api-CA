@@ -76,6 +76,17 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
+router.delete("/delete/:id", async (req, res) => {
+  const id = req.params.id;
+  User.findByIdAndDelete(id, (err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(user);
+    }
+  });
+});
+
 //Add a favourite. No Error Handling Yet. Can not add duplicates!
 router.post(
   "/:userName/favourites",

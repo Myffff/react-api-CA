@@ -34,6 +34,20 @@ export const updateInfo = (id, username, email, password) => {
   }).then((res) => res.json());
 };
 
+export const deleteUser = (id) => {
+  return fetch(`/api/users/delete/${id}`, {
+    headers: new Headers({ "content-type": "application/json" }),
+    method: "delete"
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("successfully delete user");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const getMovies = () => {
   return fetch("/api/movies", {
     headers: {

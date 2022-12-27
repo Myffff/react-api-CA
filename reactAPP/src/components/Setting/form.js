@@ -4,9 +4,10 @@ import Avatar from "@mui/material/Avatar";
 import { deepPurple } from "@mui/material/colors";
 import { AuthContext } from "../../contexts/authcontext";
 import { Button } from "@mui/material";
+import { deleteUser } from "../../api/movie-api";
 import "./setting.css";
 
-export default function Form() {
+export default function Form(props) {
   const context = useContext(AuthContext);
   const [username, setUserName] = useState(context.userName);
   const user = context.user;
@@ -53,7 +54,6 @@ export default function Form() {
             <label>Password</label>
           </div>
           <br />
-          {/* <input type="submit" value="Submit" /> */}
           <Button
             fullWidth="true"
             type="submit"
@@ -62,6 +62,14 @@ export default function Form() {
           >
             Submit
           </Button>
+          <button
+            onClick={() => {
+              props.setIsAuthenticated(false);
+              deleteUser(user._id);
+            }}
+          >
+            Delete Account
+          </button>
         </form>
       </Box>
     </div>

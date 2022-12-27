@@ -16,7 +16,7 @@ const Setting = () => {
   return (
     <>
       {!isAuthenticated && <Login />}
-      {isAuthenticated && <Form />}
+      {isAuthenticated && <Form setIsAuthenticated={setIsAuthenticated} />}
     </>
   );
 };
