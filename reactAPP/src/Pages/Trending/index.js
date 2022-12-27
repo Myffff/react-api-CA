@@ -1,46 +1,25 @@
-import axios from "axios";
 import "./Trending.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SingleContent from "../../components/SingleContent";
-import CustomPagination from "../../components/pagination/index";
-import { useQuery } from "react-query";
+import { getTrending } from "../../api/movie-api";
 
 const Trending = () => {
-  const [page,setPage] = useState(1);
+  const [page] = useState(1);
+  const [content, setContent] = useState([]);
 
-  const handleChange = (e, value) => {
-    setPage(value)
-  }
-
-  const fetchTrending = async (args) => {
-    const [, pagePart] = args.queryKey
-    const {page} = pagePart
-    const {data } = await axios.get(
-      `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
-    );
-    return data
-  };
-
-  const { data , error, isLoading, isError } = useQuery(
-    [`Trending${page}`, {page: page}], fetchTrending
-  );
-
-
-  if (isLoading) {
-    return <p>isLoading</p>;
-  }
-
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
-
+  useEffect(() => {
+    getTrending().then((result) => {
+      setContent(result);
+    });
+    // eslint-disable-next-line
+  }, [page]);
 
   return (
     <div>
       <span className="pageTitle">Trending Today</span>
       <div className="trending">
-        {data.results &&
-          data.results.map((c) => (
+        {content &&
+          content.map((c) => (
             <SingleContent
               key={c.id}
               id={c.id}
@@ -52,8 +31,6 @@ const Trending = () => {
             />
           ))}
       </div>
-
-      <CustomPagination handleChange={handleChange}/>
     </div>
   );
 };
