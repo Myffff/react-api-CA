@@ -38,18 +38,18 @@ secret=YourJWTSecret
 
 ## API Design
 
-Give an overview of your web API design, perhaps similar to the following:
+An overview of your web API design
 
-- /api/movies | GET | Gets a list of movies
-- /api/movies/{movieid} | GET | Gets a single movie
-- /api/series | GET | Gets a list of TV series
-- /api/series/{id} | GET | Gets a single TV series
-- /api/people | GET | Gets a list of popular actors
-- /api/trending | GET | Gets a list of trending movies/TV series
-- /api/user | GET | Gets a list of users
-- /api/users?action=register | POST | add a new user
-- /api/users/update/${id} | PUT | modify information of exist user.
-- /api/users/delete/${id} | DELETE | delete exist user from user list.
+- /api/movies | GET | Gets a list of movies `movies-api/api/movies`
+- /api/movies/{movieid} | GET | Gets a single movie `movies-api/api/movies`
+- /api/series | GET | Gets a list of TV series `movies-api/api/series`
+- /api/series/{id} | GET | Gets a single TV series `movies-api/api/series`
+- /api/people | GET | Gets a list of popular actors `movies-api/api/people`
+- /api/trending | GET | Gets a list of trending movies/TV series `movies-api/api/trending`
+- /api/user | GET | Gets a list of users `movies-api/api/users`
+- /api/users?action=register | POST | add a new user`movies-api/api/users`
+- /api/users/update/${id} | PUT | modify information of exist user.`movies-api/api/users`
+- /api/users/delete/${id} | DELETE | delete exist user from user list.`movies-api/api/users`
 
 swaggerAPI document: [Yml Document](./APIDocument.yml)
 ![api](./pic/pic1.jpg)
