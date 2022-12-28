@@ -25,6 +25,7 @@ router.post(
         success: false,
         msg: "Please pass username, email and password."
       });
+      alert("Please pass username, email and password.");
       return next();
     }
     if (!validatePassword(req.body.password)) {
@@ -32,6 +33,9 @@ router.post(
         success: false,
         msg: "passwords are at least 5 characters long and contain at least one number and one letter."
       });
+      alert(
+        "passwords are at least 5 characters long and contain at least one number and one letter."
+      );
       return next();
     }
     if (req.query.action === "register") {
@@ -55,6 +59,7 @@ router.post(
           res
             .status(401)
             .json({ code: 401, msg: "Authentication failed. Wrong password." });
+          alert("Wrong password.");
         }
       });
     }

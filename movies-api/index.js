@@ -7,6 +7,7 @@ import usersRouter from "./api/users";
 import genresRouter from "./api/genres";
 import trendingRouter from "./api/trending";
 import peopleRouter from "./api/people";
+import seriesRouter from "./api/series";
 import session from "express-session";
 import authenticate from "./authenticate";
 import passport from "./authenticate";
@@ -36,6 +37,11 @@ app.use(
   "/api/movies",
   passport.authenticate("jwt", { session: false }),
   moviesRouter
+);
+app.use(
+  "/api/series",
+  passport.authenticate("jwt", { session: false }),
+  seriesRouter
 );
 app.use("/api/trending", trendingRouter);
 app.use("/api/people", peopleRouter);

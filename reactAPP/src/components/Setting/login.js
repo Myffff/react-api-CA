@@ -28,6 +28,7 @@ const Login = () => {
     event.preventDefault();
     const res = await signup(username, email, password);
     if (res.code === 201) {
+      alert("Sign up success");
       console.log("Sign up success");
       navigate("/");
     }

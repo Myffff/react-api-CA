@@ -1,0 +1,372 @@
+openapi: 3.0.3
+info:
+  title: Yifei's movie hub
+  version: "1.0"
+servers:
+  - url: localhost:8080/api
+tags:
+  - name: movies
+    description: Everything about movies
+  - name: series
+    description: Everything about TV series
+  - name: trending
+    description: about trending movies and TV series
+  - name: people
+    description: about popular people
+  - name: user
+    description: Operations about user
+paths:
+  /users:
+    post:
+      tags:
+        - user
+      summary: Logs user into the system
+      description: ""
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        "401":
+          description: Please pass username, email and password.
+  /users?action=register:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/User"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/User"
+  /users/update/${id}:
+    put:
+      tags:
+        - user
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/User"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        default:
+          description: successful operation
+  /users/delete/${id}:
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+  /movies:
+    get:
+      tags:
+        - movies
+      description: get all movies in the movie list
+      operationId: getMovies
+      responses:
+        "200":
+          description: Successful operation
+  /movies/{id}:
+    get:
+      tags:
+        - movies
+      summary: Find pet by ID
+      description: Returns a single pet
+      operationId: getMovieById
+      parameters:
+        - name: id
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: The resource you requested could not be found.
+  /series:
+    get:
+      tags:
+        - series
+      description: get all tv series in the series list
+      operationId: getSeries
+      responses:
+        "200":
+          description: Successful operation
+  /series/{id}:
+    get:
+      tags:
+        - series
+      summary: Find TV series by ID
+      description: Returns a single tv series
+      operationId: getSeriesById
+      parameters:
+        - name: id
+          in: path
+          description: ID of series to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: The resource you requested could not be found.
+  /trending:
+    get:
+      tags:
+        - trending
+      description: get all trending movies and tv series in the trending list
+      operationId: getTrending
+      responses:
+        "200":
+          description: Successful operation
+  /people:
+    get:
+      tags:
+        - people
+      description: get all popular people in the people list
+      operationId: getPeople
+      responses:
+        "200":
+          description: Successful operation
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        username:
+          type: string
+          example: theUser
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: "12345"
+      xml:
+        name: user
+    Movies:
+      type: object
+      properties:
+        adult:
+          type: boolean
+        id:
+          type: number
+        poster_path:
+          type: string
+        overview:
+          type: string
+        release_date:
+          type: string
+        original_title:
+          type: string
+        genre_ids:
+          type: number
+        original_language:
+          type: string
+        title:
+          type: string
+        backdrop_path:
+          type: string
+        popularity:
+          type: number
+        vote_count:
+          type: number
+        video:
+          type: boolean
+        vote_average:
+          type: number
+        runtime:
+          type: number
+        status:
+          type: string
+        tagline:
+          type: string
+    Series:
+      type: object
+      properties:
+        first_air_date:
+          type: string
+        id:
+          type: number
+        backdrop_path:
+          type: string
+        overview:
+          type: string
+        origin_country:
+          type: string
+        origin_name:
+          type: string
+        genre_ids:
+          type: number
+        original_language:
+          type: string
+        name:
+          type: string
+        poster_path:
+          type: string
+        popularity:
+          type: number
+        vote_count:
+          type: number
+        vote_average:
+          type: number
+    Trending:
+      type: object
+      properties:
+        adult:
+          type: boolean
+        id:
+          type: number
+        poster_path:
+          type: string
+        overview:
+          type: string
+        release_date:
+          type: string
+        original_title:
+          type: string
+        genre_ids:
+          type: number
+        original_language:
+          type: string
+        title:
+          type: string
+        backdrop_path:
+          type: string
+        popularity:
+          type: number
+        vote_count:
+          type: number
+        video:
+          type: boolean
+        vote_average:
+          type: number
+        media_type:
+          type: string
+    People:
+      type: object
+      properties:
+        backdrop_path:
+          type: string
+        vote_count:
+          type: number
+        vote_average:
+          type: number
+        media_type:
+          type: string
+        first_air_date:
+          type: string
+        genre_ids:
+          type: number
+        id:
+          type: number
+        name:
+          type: string
+        origin_country:
+          type: string
+        original_name:
+          type: string
+        original_language:
+          type: string
+        poster_path:
+          type: string
+        overview:
+          type: string
+
+  requestBodies:
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/User"

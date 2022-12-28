@@ -41,6 +41,7 @@ export const deleteUser = (id) => {
   })
     .then((res) => res.json())
     .then((data) => {
+      alert("successfully delete user");
       console.log("successfully delete user");
     })
     .catch((error) => {
