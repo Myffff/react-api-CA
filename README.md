@@ -15,17 +15,15 @@ A bullet-point list of the ADDITIONAL features you have implemented in the API *
 
 ## Setup requirements.
 
-No
+```js
+npm install
+```
 
 ## API Configuration
 
-Describe any configuration that needs to take place before running the API. For example, creating an `.env` file and what variables to put in it. Give an example of how this might be done.
-
 I have `.env` respectively in reactApp folder and movies-api folder.
 
-REMEMBER: DON'T PUT YOUR OWN USERNAMES/PASSWORDS/AUTH KEYS IN THE README OR ON GITHUB, just placeholders as indicated below:
-
----
+```
 
 NODEENV=development
 PORT=8080
@@ -34,7 +32,7 @@ mongoDB=YourMongoURL
 seedDb=true
 secret=YourJWTSecret
 
----
+```
 
 ## API Design
 
@@ -51,14 +49,35 @@ An overview of your web API design
 - /api/users/update/${id} | PUT | modify information of exist user.`movies-api/api/users`
 - /api/users/delete/${id} | DELETE | delete exist user from user list.`movies-api/api/users`
 
-swaggerAPI document: [Yml Document](./APIDocument.yml)
+SwaggerAPI document: [Yml Document](./APIDocument.yml)
+link to online platform:
+[SwaggerHub](https://app.swaggerhub.com/templates/20099867_1/YifeiMovieHub/1.0.1)
 ![api](./pic/pic1.jpg)
 ![schema](./pic/pic2.jpg)
 
 ## Security and Authentication
 
 Give details of authentication/security implemented on the API (e.g. passport/sessions). Indicate which routes are protected.
+there are two methods to authenticate:
+
+- Front-end: use `isAuthenticated` to decide which page will not be shown when `isAuthenticiated==false`.
+
+```
+const [isAuthenticated] = useState(context.isAuthenticated);
+{isAuthenticated && (...)}
+```
+
+- Back-end: use `passport` as written in lab for authentication.
+
+```
+app.use(
+  "/api/movies",
+  passport.authenticate("jwt", { session: false }),
+  moviesRouter
+);
+```
 
 ## Integrating with React App
 
-Describe how you integrated your React app with the API. List the views that use your Web API instead of the TMDB API. Describe any other updates to the React app from Assignment One.
+setting, trending, and people router use the API defined in back-end.
+delete top rating from nevigation. add setting router for series options like login.
